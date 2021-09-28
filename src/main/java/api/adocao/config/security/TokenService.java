@@ -1,6 +1,6 @@
-package br.com.alura.forum.config.security;
+package api.adocao.config.security;
 
-import br.com.alura.forum.modelo.Usuario;
+import api.adocao.entidade.Usuario;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

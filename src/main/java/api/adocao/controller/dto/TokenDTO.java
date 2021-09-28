@@ -1,2 +1,11 @@
-package api.adocao.controller.dto;public class TokenDTO {
+package api.adocao.controller.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
+public class TokenDTO {
+    private String token;
+    private String method;
 }

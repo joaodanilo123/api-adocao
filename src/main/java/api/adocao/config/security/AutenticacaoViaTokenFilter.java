@@ -1,7 +1,7 @@
-package br.com.alura.forum.config.security;
+package api.adocao.config.security;
 
-import br.com.alura.forum.modelo.Usuario;
-import br.com.alura.forum.repository.UsuarioRepository;
+import api.adocao.entidade.Usuario;
+import api.adocao.repositorio.UsuarioRepository;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;

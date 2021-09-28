@@ -10,4 +10,6 @@ public class ApiAdocaoApplication {
 		SpringApplication.run(ApiAdocaoApplication.class, args);
 	}
 
+
+
 }

@@ -1,8 +1,8 @@
-package br.com.alura.forum.config.security;
+package api.adocao.config.security;
 
 
-import br.com.alura.forum.modelo.Usuario;
-import br.com.alura.forum.repository.UsuarioRepository;
+import api.adocao.entidade.Usuario;
+import api.adocao.repositorio.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

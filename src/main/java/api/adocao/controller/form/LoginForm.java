@@ -1,2 +1,14 @@
-package api.adocao.controller.form;public class LoginForm {
+package api.adocao.controller.form;
+
+import lombok.Data;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+
+@Data
+public class LoginForm {
+    private String email;
+    private String senha;
+
+    public UsernamePasswordAuthenticationToken converter() {
+        return new UsernamePasswordAuthenticationToken(this.email, this.senha);
+    }
 }
