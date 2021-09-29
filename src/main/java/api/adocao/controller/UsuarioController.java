@@ -20,24 +20,11 @@ import java.util.Optional;
 @RequestMapping("/usuarios")
 public class UsuarioController {
 
-    @Autowired
-    UsuarioRepository usuarioRepository;
 
-    @Autowired
-    ModelMapper modelMapper;
-
-    @Autowired
-    PasswordEncoder encoder;
 
     @GetMapping("/{id}")
     public ResponseEntity<?> mostrar(@PathVariable Long id){
-        Optional<Usuario> usuario = usuarioRepository.findById(id);
-        if (usuario.isPresent()){
-            UsuarioDTO dto = modelMapper.map(usuario.get(), UsuarioDTO.class);
-            return ResponseEntity.ok(dto);
-        }
 
-        return ResponseEntity.notFound().build();
 
     }
 

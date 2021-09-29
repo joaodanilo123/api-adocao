@@ -8,6 +8,7 @@ public class Animal {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @ManyToOne
     @JoinColumn(name = "instituicao_cnpj")
     private Instituicao instituicao;
