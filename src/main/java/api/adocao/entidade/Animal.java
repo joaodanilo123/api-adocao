@@ -2,7 +2,7 @@ package api.adocao.entidade;
 
 import javax.persistence.*;
 
-@Table(name = "animais")
+@Table(name = "animal")
 @Entity
 public class Animal {
 
