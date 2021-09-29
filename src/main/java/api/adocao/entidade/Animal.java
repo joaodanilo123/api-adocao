@@ -1,23 +1,22 @@
 package api.adocao.entidade;
 
-import javax.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-@Table(name = "animal")
-@Entity
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Data
+@AllArgsConstructor
 public class Animal {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String nome;
+    private String especie;
+    private String raca;
 
-    @ManyToOne
-    @JoinColumn(name = "instituicao_cnpj")
-    private Instituicao instituicao;
 
-    public Instituicao getInstituicao() {
-        return instituicao;
-    }
-
-    public void setInstituicao(Instituicao instituicao) {
-        this.instituicao = instituicao;
-    }
 }
