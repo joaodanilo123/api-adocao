@@ -20,13 +20,21 @@ import java.util.Optional;
 @RequestMapping("/usuarios")
 public class UsuarioController {
 
+    @Autowired
+    UsuarioRepository usuarioRepository;
+
+    @Autowired
+    ModelMapper modelMapper;
+
+    @Autowired
+    PasswordEncoder encoder;
 
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> mostrar(@PathVariable Long id){
+    //@GetMapping("/{id}")
+    /*public ResponseEntity<?> mostrar(@PathVariable Long id){
 
 
-    }
+     }*/
 
     @PostMapping
     @Transactional

@@ -17,7 +17,7 @@ public class UsuarioService {
     @Autowired
     PasswordEncoder encoder;
 
-    public UsuarioDTO listar(){
+    public void listar(){
 
     }
 
