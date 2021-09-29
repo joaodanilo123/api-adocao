@@ -28,13 +28,13 @@ public class Instituicao {
     private String endereco;
 
     @OneToMany(mappedBy = "instituicao")
-    private List<Animais> animais = new ArrayList<>();
+    private List<Animal> animais = new ArrayList<>();
 
-    public void setAnimais(List<Animais> animais) {
+    public void setAnimais(List<Animal> animais) {
         this.animais = animais;
     }
 
-    public List<Animais> getAnimais() {
+    public List<Animal> getAnimais() {
         return animais;
     }
 }
