@@ -5,13 +5,21 @@ import api.adocao.entidade.Animal;
 import api.adocao.repositorio.AnimalRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/animais")
@@ -24,8 +32,19 @@ public class AnimalController {
     ModelMapper modelMapper;
 
 
+    @GetMapping
+    public Page<AnimalDTO> listarTodos(@PageableDefault(sort = "id", direction = Sort.Direction.DESC, page = 0, size = 10) Pageable paginacao){
+        Page<Animal> pageable = this.animalRepository.findAll(paginacao);
+        List<AnimalDTO> states = pageable.getContent()
+                .stream()
+                .map(animal -> modelMapper.map(animal, AnimalDTO.class))
+                .collect(Collectors.toList());
+        return new PageImpl<AnimalDTO>(states, paginacao, pageable.getTotalElements());
+
+    }
+
     @GetMapping("/{id}")
-    public ResponseEntity<?> mostrar(@PathVariable Long id)
+    public ResponseEntity<?> buscar(@PathVariable Long id)
     {
         Optional<Animal> animal = animalRepository.findById(id);
         if(animal.isPresent())
