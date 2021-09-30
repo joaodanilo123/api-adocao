@@ -1,6 +1,7 @@
 package api.adocao.controller;
 
 import api.adocao.controller.dto.InstituicaoDTO;
+import api.adocao.controller.form.InstituicaoForm;
 import api.adocao.entidade.Instituicao;
 import api.adocao.repositorio.InstituicaoRepository;
 import org.modelmapper.ModelMapper;
@@ -24,7 +25,7 @@ public class InstituicaoController {
     ModelMapper modelMapper;
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> mostrar(@PathVariable String id)
+    public ResponseEntity<?> mostrar(@PathVariable Long id)
     {
         Optional<Instituicao> instituicao = repository.findById(id);
         if(instituicao.isPresent())
@@ -34,6 +35,45 @@ public class InstituicaoController {
         }
         return ResponseEntity.notFound().build();
     }
+
+    @PostMapping
+    @Transactional
+    public ResponseEntity<?> cadastrar(@RequestBody @Valid InstituicaoForm form, UriComponentsBuilder uriComponentsBuilder)
+    {
+        Instituicao instituicao = modelMapper.map(form, Instituicao.class);
+        repository.save(instituicao);
+
+        URI uri = uriComponentsBuilder.path("/animais/{id}").buildAndExpand(instituicao.getCnpj()).toUri();
+        return ResponseEntity.created(uri).body(modelMapper.map(instituicao, InstituicaoDTO.class));
+    }
+
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity<InstituicaoDTO> atualizar(@PathVariable Long id, @RequestBody @Valid InstituicaoForm form){
+        Optional <Instituicao> optional = repository.findById(id);
+        if (optional.isPresent()) {
+            Instituicao instituicao = form.atualizar(id, repository);
+            return ResponseEntity.ok(new InstituicaoDTO(instituicao));
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+
+
+
+
+    @DeleteMapping("/id")
+    @Transactional
+    public ResponseEntity remover(@PathVariable Long id){
+        Optional<Instituicao> optional = repository.findById(id);
+        if (optional.isPresent()) {
+            repository.deleteById(id);
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
+
+    }
+
 
 
     /*@PostMapping
