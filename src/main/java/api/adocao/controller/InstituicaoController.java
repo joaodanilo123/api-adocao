@@ -6,6 +6,10 @@ import api.adocao.entidade.Instituicao;
 import api.adocao.repositorio.InstituicaoRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -24,8 +28,14 @@ public class InstituicaoController {
     @Autowired
     ModelMapper modelMapper;
 
+    @GetMapping
+    public ResponseEntity<Page<InstituicaoDTO>> list (@PageableDefault(size = 5, page = 0, direction = Sort.Direction.ASC, sort= "nome") Pageable pagina,
+                                                      @RequestParam(value = "id", required = false) Long id,
+                                                      @RequestParam(value = "cnpj", required = false) String cnpj){
+        return ResponseEntity.ok(this.list(pagina, id, cnpj).getBody());
+    }
     @GetMapping("/{id}")
-    public ResponseEntity<?> mostrar(@PathVariable Long id)
+    public ResponseEntity<?> mostrarDetalhado(@PathVariable Long id)
     {
         Optional<Instituicao> instituicao = repository.findById(id);
         if(instituicao.isPresent())
@@ -35,7 +45,6 @@ public class InstituicaoController {
         }
         return ResponseEntity.notFound().build();
     }
-
     @PostMapping
     @Transactional
     public ResponseEntity<?> cadastrar(@RequestBody @Valid InstituicaoForm form, UriComponentsBuilder uriComponentsBuilder)
@@ -46,7 +55,6 @@ public class InstituicaoController {
         URI uri = uriComponentsBuilder.path("/animais/{id}").buildAndExpand(instituicao.getCnpj()).toUri();
         return ResponseEntity.created(uri).body(modelMapper.map(instituicao, InstituicaoDTO.class));
     }
-
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<InstituicaoDTO> atualizar(@PathVariable Long id, @RequestBody @Valid InstituicaoForm form){
@@ -57,11 +65,6 @@ public class InstituicaoController {
         }
         return ResponseEntity.notFound().build();
     }
-
-
-
-
-
     @DeleteMapping("/id")
     @Transactional
     public ResponseEntity remover(@PathVariable Long id){
@@ -73,20 +76,4 @@ public class InstituicaoController {
         return ResponseEntity.notFound().build();
 
     }
-
-
-
-    /*@PostMapping
-    @Transactional
-    public ResponseEntity<?> cadastrarAnimais(@RequestBody @Valid AnimaisForm form, UriComponentsBuilder uriComponentsBuilder)
-    {
-        Animais animais = modelMapper.map(form, Animais.class);
-        repository.save(animais);
-
-        URI uri = uriComponentsBuilder.path("/animais/{id}").buildAndExpand(animais.getId()).toUri();
-        return ResponseEntity.created(uri).body(modelMapper.map(animais, AnimaisDTO.class));
-    }*/
-
-
-
 }

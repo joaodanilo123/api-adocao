@@ -24,4 +24,7 @@ public class InstituicaoDTO {
         this.nome = instituicao.getNome();
         this.endereco = instituicao.getEndereco();
     }
+
+
+
 }
