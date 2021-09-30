@@ -2,8 +2,10 @@ package api.adocao.controller.dto;
 
 import api.adocao.entidade.Animal;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class AnimalDTO {
     private Long id;
     private String nome;
