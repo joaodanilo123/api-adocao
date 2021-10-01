@@ -1,18 +1,14 @@
 package api.adocao.entidade;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Getter
+@Setter
 public class Animal {
 
     @Id
@@ -21,6 +17,9 @@ public class Animal {
     private String nome;
     private String especie;
     private String raca;
+    @ManyToOne
+    @JoinColumn(name = "instituicao_cnpj")
+    private Instituicao instituicao;
 
 
 }

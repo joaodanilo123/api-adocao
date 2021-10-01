@@ -1,6 +1,7 @@
 package api.adocao.entidade;
 
 import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -12,10 +13,12 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "entidade")
-@Data
+@Getter
+@Setter
 @ToString
 @RequiredArgsConstructor
 public class Instituicao {
@@ -28,6 +31,7 @@ public class Instituicao {
     private String endereco;
 
     @OneToMany(mappedBy = "instituicao")
+    @ToString.Exclude
     private List<Animal> animais = new ArrayList<>();
 
     public void setAnimais(List<Animal> animais) {
@@ -37,4 +41,5 @@ public class Instituicao {
     public List<Animal> getAnimais() {
         return animais;
     }
+
 }
