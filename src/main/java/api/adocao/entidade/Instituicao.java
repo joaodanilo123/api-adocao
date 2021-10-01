@@ -21,9 +21,11 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class Instituicao {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotNull @NotEmpty
+    private String cnpj;
+    @NotNull @NotEmpty @Min(5) @Max(255)
     private String nome;
     private String endereco;
     private String telefone;
