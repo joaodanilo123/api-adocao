@@ -31,7 +31,6 @@ public class AnimalController {
     @Autowired
     ModelMapper modelMapper;
 
-
     @GetMapping
     public Page<AnimalDTO> listarTodos(@PageableDefault(sort = "id", direction = Sort.Direction.DESC, page = 0, size = 10) Pageable paginacao){
         Page<Animal> pageable = this.animalRepository.findAll(paginacao);

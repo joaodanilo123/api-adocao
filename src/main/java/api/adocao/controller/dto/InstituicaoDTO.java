@@ -20,13 +20,4 @@ public class InstituicaoDTO {
 
     private String endereco;
 
-    public InstituicaoDTO (Instituicao instituicao)
-    {
-        this.telefone = instituicao.getTelefone();
-        this.nome = instituicao.getNome();
-        this.endereco = instituicao.getEndereco();
-    }
-
-
-
 }

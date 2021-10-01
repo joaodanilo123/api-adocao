@@ -17,9 +17,10 @@ public class Animal {
     private String nome;
     private String especie;
     private String raca;
+
     @ManyToOne
-    @JoinColumn(name = "instituicao_cnpj")
-    private Instituicao instituicao;
+    @JoinColumn(name = "instituicao_id")
+    private Instituicao instituicao = null;
 
 
 }

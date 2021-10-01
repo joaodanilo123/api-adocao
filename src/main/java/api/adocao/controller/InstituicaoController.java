@@ -61,7 +61,7 @@ public class InstituicaoController {
         Optional <Instituicao> optional = repository.findById(id);
         if (optional.isPresent()) {
             Instituicao instituicao = form.atualizar(id, repository);
-            return ResponseEntity.ok(new InstituicaoDTO(instituicao));
+            return ResponseEntity.ok().build();
         }
         return ResponseEntity.notFound().build();
     }
