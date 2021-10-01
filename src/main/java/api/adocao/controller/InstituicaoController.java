@@ -17,7 +17,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping("/instituicao")
 public class InstituicaoController {
@@ -29,10 +32,10 @@ public class InstituicaoController {
     ModelMapper modelMapper;
 
     @GetMapping
-    public ResponseEntity<Page<InstituicaoDTO>> list (@PageableDefault(size = 5, page = 0, direction = Sort.Direction.ASC, sort= "nome") Pageable pagina,
+    public ResponseEntity<List<InstituicaoDTO>> list (@PageableDefault(size = 5, page = 0, direction = Sort.Direction.ASC, sort= "nome") Pageable pagina,
                                                       @RequestParam(value = "id", required = false) Long id,
                                                       @RequestParam(value = "nome", required = false) String nome){
-        return ResponseEntity.ok(this.list(pagina, id, nome).getBody());
+        return ResponseEntity.ok(repository.findAll().stream().map(instituicao -> modelMapper.map(instituicao, InstituicaoDTO.class)).collect(Collectors.toList()));
     }
     @GetMapping("/{id}")
     public ResponseEntity<?> mostrarDetalhado(@PathVariable Long id)
@@ -65,7 +68,8 @@ public class InstituicaoController {
         }
         return ResponseEntity.notFound().build();
     }
-    @DeleteMapping("/id")
+
+    @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity remover(@PathVariable Long id){
         Optional<Instituicao> optional = repository.findById(id);
