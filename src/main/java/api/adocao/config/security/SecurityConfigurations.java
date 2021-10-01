@@ -42,7 +42,10 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/*").permitAll() //TEMPORARIO
+                .antMatchers(HttpMethod.GET, "/**").permitAll()
+                .antMatchers(HttpMethod.PUT, "/**").permitAll()//TEMPORARIO
+                .antMatchers(HttpMethod.POST, "/**").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/usuarios").permitAll()
                 .antMatchers(HttpMethod.POST, "/usuarios").permitAll()
                 .antMatchers(HttpMethod.GET, "/usuarios/*").permitAll()
