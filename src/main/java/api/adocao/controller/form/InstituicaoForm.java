@@ -18,19 +18,12 @@ public class InstituicaoForm {
     @Length(min = 3, max = 255)
     private String endereco;
 
-
     public Instituicao atualizar(Long id, InstituicaoRepository repository)
     {
         Instituicao instituicao = repository.getById(id);
         instituicao.setNome(this.nome);
         instituicao.setEndereco(this.endereco);
+        instituicao.setCnpj(this.cnpj);
         return instituicao;
     }
-    /*    public Animal atualizar(Long id, AnimalRepository animalRepository) {
-        Animal animal = animalRepository.getById(id);
-        animal.setNome(this.nome);
-        animal.setEspecie(this.especie);
-        animal.setRaca(this.raca);
-        return animal;
-    }*/
 }

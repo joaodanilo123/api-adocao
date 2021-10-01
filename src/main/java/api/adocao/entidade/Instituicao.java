@@ -3,10 +3,7 @@ package api.adocao.entidade;
 import lombok.*;
 import org.hibernate.Hibernate;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
@@ -23,7 +20,9 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class Instituicao {
 
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @NotNull @NotEmpty
     private String cnpj;
     @NotNull @NotEmpty @Min(5) @Max(255)
     private String nome;

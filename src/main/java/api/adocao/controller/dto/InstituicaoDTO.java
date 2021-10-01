@@ -12,6 +12,8 @@ import javax.validation.constraints.NotNull;
 @Data
 public class InstituicaoDTO {
 
+    private Long id;
+
     private String cnpj;
 
     private String nome;
