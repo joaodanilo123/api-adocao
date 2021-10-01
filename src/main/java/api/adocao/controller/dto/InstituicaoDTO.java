@@ -14,7 +14,7 @@ public class InstituicaoDTO {
 
     private Long id;
 
-    private String cnpj;
+    private String telefone;
 
     private String nome;
 
@@ -22,7 +22,7 @@ public class InstituicaoDTO {
 
     public InstituicaoDTO (Instituicao instituicao)
     {
-        this.cnpj = instituicao.getCnpj();
+        this.telefone = instituicao.getTelefone();
         this.nome = instituicao.getNome();
         this.endereco = instituicao.getEndereco();
     }

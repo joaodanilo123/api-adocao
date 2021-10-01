@@ -31,8 +31,8 @@ public class InstituicaoController {
     @GetMapping
     public ResponseEntity<Page<InstituicaoDTO>> list (@PageableDefault(size = 5, page = 0, direction = Sort.Direction.ASC, sort= "nome") Pageable pagina,
                                                       @RequestParam(value = "id", required = false) Long id,
-                                                      @RequestParam(value = "cnpj", required = false) String cnpj){
-        return ResponseEntity.ok(this.list(pagina, id, cnpj).getBody());
+                                                      @RequestParam(value = "nome", required = false) String nome){
+        return ResponseEntity.ok(this.list(pagina, id, nome).getBody());
     }
     @GetMapping("/{id}")
     public ResponseEntity<?> mostrarDetalhado(@PathVariable Long id)
@@ -52,7 +52,7 @@ public class InstituicaoController {
         Instituicao instituicao = modelMapper.map(form, Instituicao.class);
         repository.save(instituicao);
 
-        URI uri = uriComponentsBuilder.path("/animais/{id}").buildAndExpand(instituicao.getCnpj()).toUri();
+        URI uri = uriComponentsBuilder.path("/animais/{id}").buildAndExpand(instituicao.getTelefone()).toUri();
         return ResponseEntity.created(uri).body(modelMapper.map(instituicao, InstituicaoDTO.class));
     }
     @PutMapping("/{id}")
