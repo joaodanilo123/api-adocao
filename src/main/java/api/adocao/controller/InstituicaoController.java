@@ -54,8 +54,8 @@ public class InstituicaoController {
     {
         Instituicao instituicao = modelMapper.map(form, Instituicao.class);
         repository.save(instituicao);
-
-        URI uri = uriComponentsBuilder.path("/animais/{id}").buildAndExpand(instituicao.getTelefone()).toUri();
+                                                //correção dessa merda de novo pq tava bugado sei la porque mas tava animais e telefone
+        URI uri = uriComponentsBuilder.path("/instituicao/{id}").buildAndExpand(instituicao.getId()).toUri();
         return ResponseEntity.created(uri).body(modelMapper.map(instituicao, InstituicaoDTO.class));
     }
     @PutMapping("/{id}")
