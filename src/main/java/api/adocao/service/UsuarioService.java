@@ -1,5 +1,6 @@
 package api.adocao.service;
 
+import api.adocao.config.security.TokenService;
 import api.adocao.controller.dto.UsuarioDTO;
 import api.adocao.controller.dto.UsuarioDetalhadoDTO;
 import api.adocao.controller.form.AtualizacaoUsuarioForm;
@@ -12,8 +13,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
@@ -32,6 +35,9 @@ public class UsuarioService {
     @Autowired
     PasswordEncoder encoder;
 
+    @Autowired
+    TokenService tokenService;
+
     public ResponseEntity<List<UsuarioDTO>> listar(){
         List<UsuarioDTO> dtos = usuarioRepository.findAll().stream()
                 .map(usuario -> modelMapper.map(usuario, UsuarioDTO.class))
@@ -44,11 +50,6 @@ public class UsuarioService {
         return ResponseEntity.ok(dtos);
     }
 
-    public ResponseEntity<UsuarioDetalhadoDTO> mostrar(Long id){
-        Optional<Usuario> usuario = usuarioRepository.findById(id);
-        return usuario.isPresent() ? ResponseEntity.ok(modelMapper.map(usuario.get(), UsuarioDetalhadoDTO.class)) : ResponseEntity.notFound().build();
-    }
-
     public ResponseEntity<?> cadastrar(@RequestBody @Valid UsuarioForm form, UriComponentsBuilder uriBuilder){
         Usuario usuario = modelMapper.map(form, Usuario.class);
         usuario.setSenha(encoder.encode(usuario.getSenha()));
@@ -59,33 +60,53 @@ public class UsuarioService {
 
     }
 
-    public ResponseEntity<?> atualizar(@RequestBody @Valid AtualizacaoUsuarioForm form, Long id) {
-        Optional<Usuario> usuarioBusca = usuarioRepository.findById(id);
+    public ResponseEntity<?> atualizar(@RequestBody @Valid AtualizacaoUsuarioForm form, String header) {
+        Usuario usuario = recuperarUsuarioPorToken(header);
 
-        if(usuarioBusca.isPresent()){
-            Usuario usuario = usuarioBusca.get();
-
+        if(usuario != null){
             usuario.setEmail(form.getEmail());
             usuario.setCpf(form.getCpf());
             usuario.setNome(form.getNome());
             usuario.setTelefone(form.getTelefone());
 
             return ResponseEntity.ok().build();
-
         }
 
         return ResponseEntity.notFound().build();
     }
 
-    public ResponseEntity<?> deletar(Long id) {
-        Optional<Usuario> usuarioBusca = usuarioRepository.findById(id);
+    public ResponseEntity<?> deletar(String header) {
+        Usuario usuario = recuperarUsuarioPorToken(header);
 
-        if(usuarioBusca.isPresent()) {
-            usuarioRepository.delete(usuarioBusca.get());
+        if(usuario != null) {
+            usuarioRepository.delete(usuario);
             return ResponseEntity.ok().build();
         }
 
         return ResponseEntity.notFound().build();
     }
 
+    public ResponseEntity<UsuarioDetalhadoDTO> mostrar(String header){
+        Usuario usuario = recuperarUsuarioPorToken(header);
+        if(usuario != null) {
+            UsuarioDetalhadoDTO dto = modelMapper.map(usuario, UsuarioDetalhadoDTO.class);
+            return ResponseEntity.ok(dto);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+
+
+    private Usuario recuperarUsuarioPorToken(String header){
+        String token = tokenService.recuperarTokenDoHeader(header);
+        if(tokenService.isTokenValido(token)){
+            Long id = tokenService.getIdUsuario(token);
+            Optional<Usuario> usuario = usuarioRepository.findById(id);
+            if(usuario.isPresent()){
+                return usuario.get();
+            }
+        }
+
+        return null;
+    }
 }
