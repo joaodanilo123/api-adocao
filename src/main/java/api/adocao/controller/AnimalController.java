@@ -2,10 +2,11 @@ package api.adocao.controller;
 import api.adocao.controller.dto.AnimalDTO;
 import api.adocao.controller.form.AnimalForm;
 import api.adocao.entidade.Animal;
+import api.adocao.entidade.Instituicao;
 import api.adocao.repositorio.AnimalRepository;
+import api.adocao.repositorio.InstituicaoRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -87,7 +88,5 @@ public class AnimalController {
         return ResponseEntity.notFound().build();
 
     }
-
-
 
 }

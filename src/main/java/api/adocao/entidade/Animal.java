@@ -20,7 +20,7 @@ public class Animal {
 
     @ManyToOne
     @JoinColumn(name = "instituicao_id")
-    private Instituicao instituicao = null;
+    private Instituicao instituicao;
 
 
 }
