@@ -22,7 +22,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/ponto_de_coleta")
+@RequestMapping("/ponto")
 public class PontoDeColetaController {
 
     @Autowired
@@ -40,7 +40,8 @@ public class PontoDeColetaController {
                 .map(pontoDeColeta -> modelMapper.map(pontoDeColeta, PontoDeColetaDTO.class))
                 .collect(Collectors.toList()));
     }
-    @GetMapping("/id")
+
+    @GetMapping("/{id}")
     public ResponseEntity<?> mostrarDetalhado(@PathVariable Long id)
     {
         Optional<PontoDeColeta> ponto = repository.findById(id);
