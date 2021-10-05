@@ -3,6 +3,7 @@ package api.adocao.controller;
 import api.adocao.controller.dto.UsuarioDTO;
 import api.adocao.controller.dto.UsuarioDetalhadoDTO;
 import api.adocao.controller.form.AtualizacaoUsuarioForm;
+import api.adocao.controller.form.NovaSenhaForm;
 import api.adocao.controller.form.UsuarioForm;
 import api.adocao.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,12 @@ public class UsuarioController {
     @Transactional
     public ResponseEntity<?> deletar(@RequestHeader(name = "Authorization") String header){
         return service.deletar(header);
+    }
+
+    @PutMapping("/mudar_senha")
+    @Transactional
+    public ResponseEntity<?> cadastrar(@RequestBody @Valid NovaSenhaForm form, @RequestHeader(name = "Authorization") String header){
+        return service.trocarSenha(header, form.getSenha());
     }
 
 }

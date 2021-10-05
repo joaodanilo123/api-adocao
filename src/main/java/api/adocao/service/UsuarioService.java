@@ -95,6 +95,14 @@ public class UsuarioService {
         return ResponseEntity.notFound().build();
     }
 
+    public ResponseEntity<?> trocarSenha(String header, String novaSenha){
+        Usuario usuario = recuperarUsuarioPorToken(header);
+        if(usuario != null) {
+            usuario.setSenha(encoder.encode(novaSenha));
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
 
 
     private Usuario recuperarUsuarioPorToken(String header){
