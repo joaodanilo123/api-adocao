@@ -44,7 +44,7 @@ public class UsuarioController {
 
     @DeleteMapping
     @Transactional
-    public ResponseEntity<?> deletar(@RequestHeader String header){
+    public ResponseEntity<?> deletar(@RequestHeader(name = "Authorization") String header){
         return service.deletar(header);
     }
 
