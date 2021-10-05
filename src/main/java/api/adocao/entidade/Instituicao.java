@@ -10,7 +10,8 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 public class Instituicao {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,6 +19,7 @@ public class Instituicao {
     private String nome;
     private String endereco;
     private String telefone;
+
     @OneToMany(mappedBy = "instituicao")
     @ToString.Exclude
     private List<Animal> animais = new ArrayList<>();

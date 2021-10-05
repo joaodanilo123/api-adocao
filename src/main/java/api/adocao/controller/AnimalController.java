@@ -2,7 +2,6 @@ package api.adocao.controller;
 import api.adocao.controller.dto.AnimalDTO;
 import api.adocao.controller.form.AnimalForm;
 import api.adocao.entidade.Animal;
-import api.adocao.entidade.Instituicao;
 import api.adocao.repositorio.AnimalRepository;
 import api.adocao.repositorio.InstituicaoRepository;
 import org.modelmapper.ModelMapper;
@@ -28,6 +27,9 @@ public class AnimalController {
 
     @Autowired
     private AnimalRepository animalRepository;
+
+    @Autowired
+    private InstituicaoRepository instituicaoRepository;
 
     @Autowired
     ModelMapper modelMapper;
@@ -60,6 +62,8 @@ public class AnimalController {
     public ResponseEntity<?> cadastrar(@RequestBody @Valid AnimalForm form, UriComponentsBuilder uriBuilder){
         Animal animal = modelMapper.map(form, Animal.class);
 
+        //setando o ID pra null pois o modelMapper também atribui o instituicaoId pro id do animal, sobrescrevendo algum animal que já existe
+        animal.setId(null);
         animalRepository.save(animal);
 
         URI uri = uriBuilder.path("/animais/{id}").buildAndExpand(animal.getId()).toUri();
@@ -72,7 +76,7 @@ public class AnimalController {
         Optional<Animal> optional = animalRepository.findById(id);
         if (optional.isPresent()) {
             Animal animal = form.atualizar(id, animalRepository);
-            return ResponseEntity.ok(new AnimalDTO(animal));
+            return ResponseEntity.ok(modelMapper.map(animal, AnimalDTO.class));
         }
         return ResponseEntity.notFound().build();
     }

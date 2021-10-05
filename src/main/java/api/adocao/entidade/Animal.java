@@ -19,8 +19,7 @@ public class Animal {
     private String raca;
 
     @ManyToOne
-    @JoinColumn(name = "instituicao_id")
+    @JoinColumn(name = "id_instituicao")
     private Instituicao instituicao;
-
 
 }

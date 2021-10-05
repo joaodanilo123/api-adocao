@@ -14,20 +14,22 @@ public class AnimalForm {
     @NotNull
     @Length(min = 3, max = 255)
     private String nome;
+
     @NotNull
     @Length(min = 3, max = 255)
     private String especie;
+
     @NotNull
     @Length(min = 3, max = 255)
     private String raca;
-    private Instituicao instituicao;
+
+    private Long instituicaoId;
 
     public Animal atualizar(Long id, AnimalRepository animalRepository) {
         Animal animal = animalRepository.getById(id);
         animal.setNome(this.nome);
         animal.setEspecie(this.especie);
         animal.setRaca(this.raca);
-        animal.setInstituicao(this.instituicao);
         return animal;
     }
 }
