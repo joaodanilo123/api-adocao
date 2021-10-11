@@ -14,7 +14,7 @@
 	<name>API Adocao</name>
 	<description>Backend do site de adoção de animais</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>16</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
