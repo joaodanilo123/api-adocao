@@ -5,6 +5,7 @@ import api.adocao.repositorio.InventarioRepository;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Data
 public class InventarioForm {
@@ -13,6 +14,8 @@ public class InventarioForm {
 
     @NotNull
     private Long instituicaoId;
+    @NotNull//@JsonFormat(pattern="dd-MM-yyyy")
+    private Date data_doacao;
 
     public Inventario atualizar(Long id, InventarioRepository repository)
     {

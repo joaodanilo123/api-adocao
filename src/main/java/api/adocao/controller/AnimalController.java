@@ -46,7 +46,7 @@ public class AnimalController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> buscar(@PathVariable Long id)
+    public ResponseEntity<?> buscar(@PathVariable @Valid Long id)
     {
         Optional<Animal> animal = animalRepository.findById(id);
         if(animal.isPresent())
@@ -83,7 +83,7 @@ public class AnimalController {
 
     @DeleteMapping("/id")
     @Transactional
-    public ResponseEntity remover(@PathVariable Long id){
+    public ResponseEntity remover(@PathVariable @Valid Long id){
         Optional<Animal> optional = animalRepository.findById(id);
         if (optional.isPresent()) {
             animalRepository.deleteById(id);
