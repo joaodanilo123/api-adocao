@@ -11,6 +11,9 @@ public class InventarioForm {
     @NotNull
     private String item;
 
+    @NotNull
+    private Long instituicaoId;
+
     public Inventario atualizar(Long id, InventarioRepository repository)
     {
         Inventario inventario = repository.getById(id);

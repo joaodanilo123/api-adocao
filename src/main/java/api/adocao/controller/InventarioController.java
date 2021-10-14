@@ -4,6 +4,7 @@ import api.adocao.controller.dto.InventarioDTO;
 import api.adocao.controller.form.InventarioForm;
 import api.adocao.entidade.Inventario;
 import api.adocao.entidade.PontoDeColeta;
+import api.adocao.repositorio.InstituicaoRepository;
 import api.adocao.repositorio.InventarioRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,9 @@ public class InventarioController {
     InventarioRepository repository;
 
     @Autowired
+    InstituicaoRepository instituicaoRepository;
+
+    @Autowired
     ModelMapper modelMapper;
 
     @GetMapping
@@ -50,8 +54,12 @@ public class InventarioController {
         return ResponseEntity.notFound().build();
     }
 
+    @PostMapping
+    @Transactional
     public ResponseEntity<?> cadastrar(@RequestBody @Valid InventarioForm form, UriComponentsBuilder uriComponentsBuilder) {
-        Inventario inventario = modelMapper.map(form, Inventario.class);
+        Inventario inventario = new Inventario();
+        inventario.setItem(form.getItem());
+        inventario.setInstituicao(instituicaoRepository.getById(form.getInstituicaoId()));
         repository.save(inventario);
 
         URI uri = uriComponentsBuilder.path("inventario/id").buildAndExpand(inventario.getId()).toUri();
