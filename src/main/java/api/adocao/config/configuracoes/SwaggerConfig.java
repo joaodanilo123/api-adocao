@@ -1,5 +1,6 @@
 package api.adocao.config.configuracoes;
 
+import api.adocao.entidade.Instituicao;
 import api.adocao.entidade.Usuario;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
