@@ -1,5 +1,6 @@
 package api.adocao.controller;
 import api.adocao.controller.dto.AnimalDTO;
+import api.adocao.controller.dto.PontoDeColetaDTO;
 import api.adocao.controller.form.AnimalForm;
 import api.adocao.entidade.Animal;
 import api.adocao.repositorio.AnimalRepository;
@@ -29,20 +30,21 @@ public class AnimalController {
     private AnimalRepository animalRepository;
 
     @Autowired
-    private InstituicaoRepository instituicaoRepository;
-
-    @Autowired
     ModelMapper modelMapper;
 
+
     @GetMapping
-    public Page<AnimalDTO> listarTodos(@PageableDefault(sort = "id", direction = Sort.Direction.DESC, page = 0, size = 10) Pageable paginacao){
-        Page<Animal> pageable = this.animalRepository.findAll(paginacao);
-        List<AnimalDTO> states = pageable.getContent()
+    public ResponseEntity<List<AnimalDTO>> list (@PageableDefault(size = 5, page = 0, direction = Sort.Direction.ASC, sort = "nome")Pageable pagina,
+                                                        @RequestParam(value = "id", required = false) Long id,
+                                                        @RequestParam(value = "nome", required = false) String nome,
+                                                        @RequestParam(value = "especie", required = false) String especie,
+                                                        @RequestParam(value = "raca", required = false) String raca,
+                                                        @RequestParam(value = "genero", required = false) String genero,
+                                                        @RequestParam(value = "instituicao", required = false) Long instituicao){
+        return ResponseEntity.ok(animalRepository.findAll()
                 .stream()
                 .map(animal -> modelMapper.map(animal, AnimalDTO.class))
-                .collect(Collectors.toList());
-        return new PageImpl<AnimalDTO>(states, paginacao, pageable.getTotalElements());
-
+                .collect(Collectors.toList()));
     }
 
     @GetMapping("/{id}")
