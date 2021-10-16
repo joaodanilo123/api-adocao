@@ -13,8 +13,8 @@ tags:
   description: "Informações e operações sobre o ponto de coleta"
 - name: "Instituição"
   description: "Informações e operações sobre a instituição"
-- name: "user"
-  description: "Operations about user"
+- name: "Usuário"
+  description: "Informações e operações sobre o Usuário"
   externalDocs:
     description: "Find out more about our store"
     url: "http://swagger.io"  
@@ -194,6 +194,7 @@ paths:
                     type: string
                   dataNascimento:
                     type: string
+                    format: date  # or date-time
                   genero:
                     type: string
                   instituicao:
@@ -216,6 +217,7 @@ paths:
                     type: string
                   dataNascimento:
                     type: string
+                    format: date  # or date-time
                   genero:
                     type: string
                   instituicao:
@@ -399,7 +401,7 @@ paths:
       - in: query
         name: nome
         schema:
-          type: String
+          type: string
         description: Filtra instituições por nome
       responses:
         200:
@@ -450,7 +452,7 @@ paths:
                     type: string
         
   /instituicao/{id}:
-  parameters:
+    parameters:
     - name: id
       in: path
       schema:
@@ -530,3 +532,72 @@ paths:
                   telefone:
                     type: string
   
+  /usuarios:
+    get:
+      tags:
+      - "Usuário"
+      summary: Faz a listagem dos usuários
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+             schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  nome:
+                    type: string
+                  email:
+                    type: string
+                  telefone:
+                    type: string
+                  nascimento:
+                    type: string
+                    format: date  # or date-time
+    post:
+      tags:
+      - "Usuário"
+      summary: Faz o cadastro do usuários
+      requestBody:
+        content:
+          apllication/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                email:
+                  type: string
+                telefone:
+                  type: string
+                nascimento:
+                  type: string
+                  format: date  # or date-time
+    responses:
+      201:
+        description: "Sucesso"
+        content:
+          apllication/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                email:
+                  type: string
+                senha:
+                  type: string
+                cpf:
+                  type: string
+                telefone:
+                  type: string
+                nascimento:
+                  type: string
+                  format: date  # or date-time
+      
+    
+      
