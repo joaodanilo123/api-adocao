@@ -15,9 +15,9 @@ tags:
   description: "Informações e operações sobre a instituição"
 - name: "Usuário"
   description: "Informações e operações sobre o Usuário"
-  externalDocs:
-    description: "Find out more about our store"
-    url: "http://swagger.io"  
+  #externalDocs:
+  #  description: "Find out more about our store"
+  #  url: "http://swagger.io"  
 paths:
   /animais:
     get:
@@ -535,7 +535,7 @@ paths:
   /usuarios:
     get:
       tags:
-      - "Usuário"
+      - Usuário
       summary: Faz a listagem dos usuários
       responses:
         200:
@@ -560,7 +560,7 @@ paths:
                     format: date  # or date-time
     post:
       tags:
-      - "Usuário"
+       - Usuário
       summary: Faz o cadastro do usuários
       requestBody:
         content:
@@ -577,27 +577,118 @@ paths:
                 nascimento:
                   type: string
                   format: date  # or date-time
-    responses:
-      201:
-        description: "Sucesso"
+      responses:
+        201:
+          description: "Sucesso"
+          content:
+           apllication/json:
+              schema:
+                type: object
+                properties:
+                  nome:
+                    type: string
+                  email:
+                    type: string
+                  senha:
+                    type: string
+                  cpf:
+                    type: string
+                  telefone:
+                    type: string
+                  nascimento:
+                    type: string
+                    format: date  # or date-time
+      
+  /usuarios/{id}:
+    parameters:
+    - name: id
+      in: path
+      schema:
+        type: number
+      required: true
+    get:
+      tags:
+      - "Usuário"
+      summary: Recupera uma instituição pelo id.
+     
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+             schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  nome:
+                    type: string
+                  email:
+                    type: string
+                  telefone:
+                    type: string
+                  nascimento:
+                    type: string
+                    format: date  # or date-time
+        404:
+          description: Usuário não encontrado
+          content:
+            application/json:
+              example: "Not Found"
+    delete:
+      tags:
+        - "Usuário"
+      summary: Deleta um usuário pelo id
+      responses:
+        '204':
+          description: Deleted
+        '404':
+          description: id not found
+        '401':
+          description: Unauthorized 
+    put:
+      tags:
+      - "Usuário"
+      summary: Altera um usuário buscando pelo id
+      requestBody:
         content:
           apllication/json:
             schema:
               type: object
               properties:
-                nome:
-                  type: string
-                email:
-                  type: string
-                senha:
-                  type: string
-                cpf:
-                  type: string
-                telefone:
-                  type: string
-                nascimento:
-                  type: string
-                  format: date  # or date-time
-      
-    
-      
+                  nome:
+                    type: string
+                  email:
+                    type: string
+                  senha:
+                    type: string
+                  cpf:
+                    type: string
+                  telefone:
+                    type: string
+                  nascimento:
+                    type: string
+                    format: date  # or date-time
+      responses:
+        201:
+          description: "Sucesso"
+          content:
+            apllication/json:
+              schema:
+                type: object
+                properties:
+                  nome:
+                    type: string
+                  email:
+                    type: string
+                  senha:
+                    type: string
+                  cpf:
+                    type: string
+                  telefone:
+                    type: string
+                  nascimento:
+                    type: string
+                    format: date  # or date-time
