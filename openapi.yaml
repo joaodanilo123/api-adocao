@@ -1,0 +1,532 @@
+openapi: 3.0.0
+info:
+ title: API para adoção de animais
+ description: Sistema para administração de adoção de animais
+ version: 0.0.1
+servers:
+- url: http://localhost:8080
+  description: API de testes
+tags:
+- name: "Animal"
+  description: "Informações e operações sobre os Animais"
+- name: "Ponto de coleta"
+  description: "Informações e operações sobre o ponto de coleta"
+- name: "Instituição"
+  description: "Informações e operações sobre a instituição"
+- name: "user"
+  description: "Operations about user"
+  externalDocs:
+    description: "Find out more about our store"
+    url: "http://swagger.io"  
+paths:
+  /animais:
+    get:
+      tags:
+      - "Animal"
+      summary: Faz a listagem dos animais
+      parameters:
+        - in: query
+          name: nome
+          schema:
+            type: string
+          description: Filtra animais por nome
+        - in: query
+          name: raca
+          schema:
+            type: string
+          description: Filtra animais por raca
+        - in: query
+          name: especie
+          schema:
+            type: string
+          description: Filtra animais por especie
+        - in: query
+          name: genero
+          schema:
+            type: string
+          description: Filtra animais por genero  
+        - in: query
+          name: instituicao
+          schema:
+            type: number
+          description: Filtra animais por instituicao  
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+             schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  nome:
+                    type: string
+                  especie:
+                    type: string
+                  raca:
+                    type: string
+                  dataNascimento:
+                    type: string
+                  genero:
+                    type: string
+                  instituicao:
+                    type: number
+    post:
+      tags:
+      - "Animal"
+      summary: Cadastra um novo animal
+      requestBody:
+        content:
+          apllication/json:
+            schema:
+              type: object
+              properties:
+                  id:
+                    type: number
+                  nome:
+                    type: string
+                  especie:
+                    type: string
+                  raca:
+                    type: string
+                  dataNascimento:
+                    type: string
+                  genero:
+                    type: string
+                  instituicao:
+                    type: number
+                
+      responses:
+        201:
+          description: "Sucesso"
+          content:
+            apllication/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  nome:
+                    type: string
+                  especie:
+                    type: string
+                  raca:
+                    type: string
+                  dataNascimento:
+                    type: string
+                  genero:
+                    type: string
+                  instituicao:
+                    type: number                
+                  
+  /animais/{id}:
+    parameters:
+    - name: id
+      in: path
+      schema:
+        type: number
+      required: true
+    get:
+      tags:
+      - "Animal"
+      summary: Recupera um animal pelo id.
+     
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+             schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  nome:
+                    type: string
+                  especie:
+                    type: string
+                  raca:
+                    type: string
+                  dataNascimento:
+                    type: string
+                  genero:
+                    type: string
+                  instituicao:
+                    type: number
+        404:
+          description: Animal não encontrado
+          content:
+            application/json:
+              example: "Not Found"
+    delete:
+      tags:
+      - "Animal"
+      summary: Deleta um animal pelo id.
+      responses:
+        '204':
+          description: Deleted
+        '404':
+          description: id not found
+        '401':
+          description: Unauthorized          
+    put:
+      tags:
+      - "Animal"
+      summary: Altera um animal baseado no id
+      requestBody:
+        content:
+          apllication/json:
+            schema:
+              type: object
+              properties:
+                  id:
+                    type: number
+                  nome:
+                    type: string
+                  especie:
+                    type: string
+                  raca:
+                    type: string
+                  dataNascimento:
+                    type: string
+                  genero:
+                    type: string
+                  instituicao:
+                    type: number
+      responses:
+        201:
+          description: "Sucesso"
+          content:
+            apllication/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  nome:
+                    type: string
+                  especie:
+                    type: string
+                  raca:
+                    type: string
+                  dataNascimento:
+                    type: string
+                  genero:
+                    type: string
+                  instituicao:
+                    type: number
+    
+  /ponto:
+    get:
+      tags:
+      - "Ponto de coleta"
+      summary: Faz a listagem dos pontos de coleta
+      parameters:
+        - in: query
+          name: nome
+          schema:
+            type: string
+          description: Filtra os pontos de coleta por nome
+        - in: query
+          name: id
+          schema:
+            type: number
+          description: Filtra os pontos de coleta por id  
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+             schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  nome:
+                    type: string
+                  endereco:
+                    type: string
+                  telefone:
+                    type: string
+                  instituicao:
+                    type: number
+                  
+    post:
+      tags:
+      - "Ponto de coleta"
+      summary: Cadastra um novo ponto de coleta
+      requestBody:
+        content:
+          apllication/json:
+            schema:
+              type: object
+              properties:
+                  id:
+                    type: number
+                  nome:
+                    type: string
+                  endereco:
+                    type: string
+                  telefone:
+                    type: string
+                  instituicao:
+                    type: number
+                
+      responses:
+        201:
+          description: "Sucesso"
+          content:
+            apllication/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  nome:
+                    type: string
+                  endereco:
+                    type: string
+                  telefone:
+                    type: string
+                  instituicao:
+                    type: number                
+                  
+  /ponto/{id}:
+    parameters:
+    - name: id
+      in: path
+      schema:
+        type: number
+      required: true
+    get:
+      tags:
+      - "Ponto de coleta"
+      summary: Recupera um ponto de coleta pelo id.
+     
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+             schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  nome:
+                    type: string
+                  endereco:
+                    type: string
+                  telefone:
+                    type: string
+                  instituicao:
+                    type: number   
+        404:
+          description: Ponto de coleta não encontrado
+          content:
+            application/json:
+              example: "Not Found"
+    delete:
+      tags:
+      - "Ponto de coleta"
+      summary: Deleta um ponto de coleta pelo id.
+      responses:
+        '204':
+          description: Deleted
+        '404':
+          description: id not found
+        '401':
+          description: Unauthorized          
+    put:
+      tags:
+      - "Ponto de coleta"
+      summary: Altera um ponto de coleta baseado no id
+      requestBody:
+        content:
+          apllication/json:
+            schema:
+              type: object
+              properties:
+                  id:
+                    type: number
+                  nome:
+                    type: string
+                  endereco:
+                    type: string
+                  telefone:
+                    type: string
+                  instituicao:
+                    type: number   
+      responses:
+        201:
+          description: "Sucesso"
+          content:
+            apllication/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  nome:
+                    type: string
+                  endereco:
+                    type: string
+                  telefone:
+                    type: string
+                  instituicao:
+                    type: number               
+  
+  /instituicao:
+    get:
+      tags:
+      - "Instituição"
+      summary:  Faz a listagem das instituições
+      parameters: 
+      - in: query
+        name: id
+        schema:
+          type: number
+        description: Filtra instituições por id
+      - in: query
+        name: nome
+        schema:
+          type: String
+        description: Filtra instituições por nome
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                    nome:
+                      type: string
+    post:
+      tags:
+      - "Instituição"
+      summary: Cadastra uma nova instituição
+      requestBody:
+        content:
+          apllication/json:
+            schema:
+              type: object
+              properties:
+                  id:
+                    type: number
+                  nome:
+                    type: string
+                  endereco:
+                    type: string
+                  telefone:
+                    type: string
+                
+      responses:
+        201:
+          description: "Sucesso"
+          content:
+            apllication/json:
+              schema:
+                type: object
+                properties:
+                  nome:
+                    type: string
+                  endereco:
+                    type: string
+                  telefone:
+                    type: string
+        
+  /instituicao/{id}:
+  parameters:
+    - name: id
+      in: path
+      schema:
+        type: number
+      required: true
+    get:
+      tags:
+      - "Instituição"
+      summary: Recupera uma instituição pelo id.
+     
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+             schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  nome:
+                    type: string
+                  endereco:
+                    type: string
+                  telefone:
+                    type: string
+        404:
+          description: Instituição não encontrada
+          content:
+            application/json:
+              example: "Not Found"
+    delete:
+      tags:
+      - "Instituição"
+      summary: Deleta uma instituição pelo id.
+      responses:
+        '204':
+          description: Deleted
+        '404':
+          description: id not found
+        '401':
+          description: Unauthorized          
+    put:
+      tags:
+      - "Instituição"
+      summary: Altera uma instituição buscando pelo id
+      requestBody:
+        content:
+          apllication/json:
+            schema:
+              type: object
+              properties:
+                  id:
+                    type: number
+                  nome:
+                    type: string
+                  endereco:
+                    type: string
+                  telefone:
+                    type: string
+      responses:
+        201:
+          description: "Sucesso"
+          content:
+            apllication/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  nome:
+                    type: string
+                  endereco:
+                    type: string
+                  telefone:
+                    type: string
+  
