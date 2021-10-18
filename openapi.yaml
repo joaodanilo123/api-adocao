@@ -1,28 +1,28 @@
 openapi: 3.0.0
 info:
- title: API para adoção de animais
- description: Sistema para administração de adoção de animais
- version: 0.0.1
+  title: API para adoção de animais
+  description: Sistema para administração de adoção de animais
+  version: 0.0.1
 servers:
-- url: http://localhost:8080
-  description: API de testes
+  - url: http://localhost:8080
+    description: API de testes
 tags:
-- name: "Animal"
-  description: "Informações e operações sobre os Animais"
-- name: "Ponto de coleta"
-  description: "Informações e operações sobre o ponto de coleta"
-- name: "Instituição"
-  description: "Informações e operações sobre a instituição"
-- name: "Usuário"
-  description: "Informações e operações sobre o Usuário"
-  #externalDocs:
-  #  description: "Find out more about our store"
-  #  url: "http://swagger.io"  
+  - name: "Animal"
+    description: "Informações e operações sobre os Animais"
+  - name: "Ponto de coleta"
+    description: "Informações e operações sobre o ponto de coleta"
+  - name: "Instituição"
+    description: "Informações e operações sobre a instituição"
+  - name: "Usuário"
+    description: "Informações e operações sobre o Usuário"
+    #externalDocs:
+    #  description: "Find out more about our store"
+    #  url: "http://swagger.io"
 paths:
   /animais:
     get:
       tags:
-      - "Animal"
+        - "Animal"
       summary: Faz a listagem dos animais
       parameters:
         - in: query
@@ -44,61 +44,63 @@ paths:
           name: genero
           schema:
             type: string
-          description: Filtra animais por genero  
+          description: Filtra animais por genero
         - in: query
           name: instituicao
           schema:
             type: number
-          description: Filtra animais por instituicao  
+          description: Filtra animais por instituicao
       responses:
         200:
           description: Sucesso
           content:
             application/json:
-             schema:
-              type: array
-              items:
-                type: object
-                properties:
-                  id:
-                    type: number
-                  nome:
-                    type: string
-                  especie:
-                    type: string
-                  raca:
-                    type: string
-                  dataNascimento:
-                    type: string
-                  genero:
-                    type: string
-                  instituicao:
-                    type: number
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                    nome:
+                      type: string
+                    especie:
+                      type: string
+                    raca:
+                      type: string
+                    dataNascimento:
+                      type: string
+                    genero:
+                      type: string
+                    instituicao:
+                      type: number
     post:
       tags:
-      - "Animal"
+        - "Animal"
       summary: Cadastra um novo animal
+      security:
+        - auth: []
       requestBody:
         content:
           apllication/json:
             schema:
               type: object
               properties:
-                  id:
-                    type: number
-                  nome:
-                    type: string
-                  especie:
-                    type: string
-                  raca:
-                    type: string
-                  dataNascimento:
-                    type: string
-                  genero:
-                    type: string
-                  instituicao:
-                    type: number
-                
+                id:
+                  type: number
+                nome:
+                  type: string
+                especie:
+                  type: string
+                raca:
+                  type: string
+                dataNascimento:
+                  type: string
+                genero:
+                  type: string
+                instituicao:
+                  type: number
+
       responses:
         201:
           description: "Sucesso"
@@ -120,52 +122,54 @@ paths:
                   genero:
                     type: string
                   instituicao:
-                    type: number                
-                  
+                    type: number
+
   /animais/{id}:
     parameters:
-    - name: id
-      in: path
-      schema:
-        type: number
-      required: true
+      - name: id
+        in: path
+        schema:
+          type: number
+        required: true
     get:
       tags:
-      - "Animal"
+        - "Animal"
       summary: Recupera um animal pelo id.
-     
+
       responses:
         200:
           description: Sucesso
           content:
             application/json:
-             schema:
-              type: array
-              items:
-                type: object
-                properties:
-                  id:
-                    type: number
-                  nome:
-                    type: string
-                  especie:
-                    type: string
-                  raca:
-                    type: string
-                  dataNascimento:
-                    type: string
-                  genero:
-                    type: string
-                  instituicao:
-                    type: number
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                    nome:
+                      type: string
+                    especie:
+                      type: string
+                    raca:
+                      type: string
+                    dataNascimento:
+                      type: string
+                    genero:
+                      type: string
+                    instituicao:
+                      type: number
         404:
           description: Animal não encontrado
           content:
             application/json:
               example: "Not Found"
     delete:
+      security:
+        - auth: []
       tags:
-      - "Animal"
+        - "Animal"
       summary: Deleta um animal pelo id.
       responses:
         '204':
@@ -173,32 +177,34 @@ paths:
         '404':
           description: id not found
         '401':
-          description: Unauthorized          
+          description: Unauthorized
     put:
       tags:
-      - "Animal"
+        - "Animal"
       summary: Altera um animal baseado no id
+      security:
+        - auth: []
       requestBody:
         content:
           apllication/json:
             schema:
               type: object
               properties:
-                  id:
-                    type: number
-                  nome:
-                    type: string
-                  especie:
-                    type: string
-                  raca:
-                    type: string
-                  dataNascimento:
-                    type: string
-                    format: date  # or date-time
-                  genero:
-                    type: string
-                  instituicao:
-                    type: number
+                id:
+                  type: number
+                nome:
+                  type: string
+                especie:
+                  type: string
+                raca:
+                  type: string
+                dataNascimento:
+                  type: string
+                  format: date  # or date-time
+                genero:
+                  type: string
+                instituicao:
+                  type: number
       responses:
         201:
           description: "Sucesso"
@@ -222,12 +228,14 @@ paths:
                     type: string
                   instituicao:
                     type: number
-    
+
   /ponto:
     get:
       tags:
-      - "Ponto de coleta"
+        - "Ponto de coleta"
       summary: Faz a listagem dos pontos de coleta
+      security:
+        - auth: []
       parameters:
         - in: query
           name: nome
@@ -238,49 +246,51 @@ paths:
           name: id
           schema:
             type: number
-          description: Filtra os pontos de coleta por id  
+          description: Filtra os pontos de coleta por id
       responses:
         200:
           description: Sucesso
           content:
             application/json:
-             schema:
-              type: array
-              items:
-                type: object
-                properties:
-                  id:
-                    type: number
-                  nome:
-                    type: string
-                  endereco:
-                    type: string
-                  telefone:
-                    type: string
-                  instituicao:
-                    type: number
-                  
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                    nome:
+                      type: string
+                    endereco:
+                      type: string
+                    telefone:
+                      type: string
+                    instituicao:
+                      type: number
+
     post:
       tags:
-      - "Ponto de coleta"
+        - "Ponto de coleta"
       summary: Cadastra um novo ponto de coleta
+      security:
+        - auth: []
       requestBody:
         content:
           apllication/json:
             schema:
               type: object
               properties:
-                  id:
-                    type: number
-                  nome:
-                    type: string
-                  endereco:
-                    type: string
-                  telefone:
-                    type: string
-                  instituicao:
-                    type: number
-                
+                id:
+                  type: number
+                nome:
+                  type: string
+                endereco:
+                  type: string
+                telefone:
+                  type: string
+                instituicao:
+                  type: number
+
       responses:
         201:
           description: "Sucesso"
@@ -298,40 +308,41 @@ paths:
                   telefone:
                     type: string
                   instituicao:
-                    type: number                
-                  
+                    type: number
+
   /ponto/{id}:
     parameters:
-    - name: id
-      in: path
-      schema:
-        type: number
-      required: true
+      - name: id
+        in: path
+        schema:
+          type: number
+        required: true
     get:
       tags:
-      - "Ponto de coleta"
+        - "Ponto de coleta"
       summary: Recupera um ponto de coleta pelo id.
-     
+      security:
+        - auth: []
       responses:
         200:
           description: Sucesso
           content:
             application/json:
-             schema:
-              type: array
-              items:
-                type: object
-                properties:
-                  id:
-                    type: number
-                  nome:
-                    type: string
-                  endereco:
-                    type: string
-                  telefone:
-                    type: string
-                  instituicao:
-                    type: number   
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                    nome:
+                      type: string
+                    endereco:
+                      type: string
+                    telefone:
+                      type: string
+                    instituicao:
+                      type: number
         404:
           description: Ponto de coleta não encontrado
           content:
@@ -339,35 +350,39 @@ paths:
               example: "Not Found"
     delete:
       tags:
-      - "Ponto de coleta"
+        - "Ponto de coleta"
       summary: Deleta um ponto de coleta pelo id.
+      security:
+        - auth: []
       responses:
         '204':
           description: Deleted
         '404':
           description: id not found
         '401':
-          description: Unauthorized          
+          description: Unauthorized
     put:
       tags:
-      - "Ponto de coleta"
+        - "Ponto de coleta"
       summary: Altera um ponto de coleta baseado no id
+      security:
+        - auth: []
       requestBody:
         content:
           apllication/json:
             schema:
               type: object
               properties:
-                  id:
-                    type: number
-                  nome:
-                    type: string
-                  endereco:
-                    type: string
-                  telefone:
-                    type: string
-                  instituicao:
-                    type: number   
+                id:
+                  type: number
+                nome:
+                  type: string
+                endereco:
+                  type: string
+                telefone:
+                  type: string
+                instituicao:
+                  type: number
       responses:
         201:
           description: "Sucesso"
@@ -385,24 +400,24 @@ paths:
                   telefone:
                     type: string
                   instituicao:
-                    type: number               
-  
+                    type: number
+
   /instituicao:
     get:
       tags:
-      - "Instituição"
+        - "Instituição"
       summary:  Faz a listagem das instituições
-      parameters: 
-      - in: query
-        name: id
-        schema:
-          type: number
-        description: Filtra instituições por id
-      - in: query
-        name: nome
-        schema:
-          type: string
-        description: Filtra instituições por nome
+      parameters:
+        - in: query
+          name: id
+          schema:
+            type: number
+          description: Filtra instituições por id
+        - in: query
+          name: nome
+          schema:
+            type: string
+          description: Filtra instituições por nome
       responses:
         200:
           description: Sucesso
@@ -419,23 +434,25 @@ paths:
                       type: string
     post:
       tags:
-      - "Instituição"
+        - "Instituição"
       summary: Cadastra uma nova instituição
+      security:
+        - auth: []
       requestBody:
         content:
           apllication/json:
             schema:
               type: object
               properties:
-                  id:
-                    type: number
-                  nome:
-                    type: string
-                  endereco:
-                    type: string
-                  telefone:
-                    type: string
-                
+                id:
+                  type: number
+                nome:
+                  type: string
+                endereco:
+                  type: string
+                telefone:
+                  type: string
+
       responses:
         201:
           description: "Sucesso"
@@ -450,37 +467,37 @@ paths:
                     type: string
                   telefone:
                     type: string
-        
+
   /instituicao/{id}:
     parameters:
-    - name: id
-      in: path
-      schema:
-        type: number
-      required: true
+      - name: id
+        in: path
+        schema:
+          type: number
+        required: true
     get:
       tags:
-      - "Instituição"
+        - "Instituição"
       summary: Recupera uma instituição pelo id.
-     
+
       responses:
         200:
           description: Sucesso
           content:
             application/json:
-             schema:
-              type: array
-              items:
-                type: object
-                properties:
-                  id:
-                    type: number
-                  nome:
-                    type: string
-                  endereco:
-                    type: string
-                  telefone:
-                    type: string
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                    nome:
+                      type: string
+                    endereco:
+                      type: string
+                    telefone:
+                      type: string
         404:
           description: Instituição não encontrada
           content:
@@ -488,33 +505,37 @@ paths:
               example: "Not Found"
     delete:
       tags:
-      - "Instituição"
+        - "Instituição"
       summary: Deleta uma instituição pelo id.
+      security:
+        - auth: []
       responses:
         '204':
           description: Deleted
         '404':
           description: id not found
         '401':
-          description: Unauthorized          
+          description: Unauthorized
     put:
       tags:
-      - "Instituição"
+        - "Instituição"
       summary: Altera uma instituição buscando pelo id
+      security:
+        - auth: []
       requestBody:
         content:
           apllication/json:
             schema:
               type: object
               properties:
-                  id:
-                    type: number
-                  nome:
-                    type: string
-                  endereco:
-                    type: string
-                  telefone:
-                    type: string
+                id:
+                  type: number
+                nome:
+                  type: string
+                endereco:
+                  type: string
+                telefone:
+                  type: string
       responses:
         201:
           description: "Sucesso"
@@ -531,36 +552,36 @@ paths:
                     type: string
                   telefone:
                     type: string
-  
+
   /usuarios:
     get:
       tags:
-      - Usuário
+        - Usuário
       summary: Faz a listagem dos usuários
       responses:
         200:
           description: Sucesso
           content:
             application/json:
-             schema:
-              type: array
-              items:
-                type: object
-                properties:
-                  id:
-                    type: number
-                  nome:
-                    type: string
-                  email:
-                    type: string
-                  telefone:
-                    type: string
-                  nascimento:
-                    type: string
-                    format: date  # or date-time
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                    nome:
+                      type: string
+                    email:
+                      type: string
+                    telefone:
+                      type: string
+                    nascimento:
+                      type: string
+                      format: date  # or date-time
     post:
       tags:
-       - Usuário
+        - Usuário
       summary: Faz o cadastro do usuários
       requestBody:
         content:
@@ -581,7 +602,7 @@ paths:
         201:
           description: "Sucesso"
           content:
-           apllication/json:
+            apllication/json:
               schema:
                 type: object
                 properties:
@@ -598,40 +619,42 @@ paths:
                   nascimento:
                     type: string
                     format: date  # or date-time
-      
+
   /usuarios/{id}:
     parameters:
-    - name: id
-      in: path
-      schema:
-        type: number
-      required: true
+      - name: id
+        in: path
+        schema:
+          type: number
+        required: true
     get:
       tags:
-      - "Usuário"
-      summary: Recupera uma instituição pelo id.
-     
+        - "Usuário"
+      summary: Recupera um usuário pelo id.
+      security:
+        - auth: []
+
       responses:
         200:
           description: Sucesso
           content:
             application/json:
-             schema:
-              type: array
-              items:
-                type: object
-                properties:
-                  id:
-                    type: number
-                  nome:
-                    type: string
-                  email:
-                    type: string
-                  telefone:
-                    type: string
-                  nascimento:
-                    type: string
-                    format: date  # or date-time
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                    nome:
+                      type: string
+                    email:
+                      type: string
+                    telefone:
+                      type: string
+                    nascimento:
+                      type: string
+                      format: date  # or date-time
         404:
           description: Usuário não encontrado
           content:
@@ -641,36 +664,40 @@ paths:
       tags:
         - "Usuário"
       summary: Deleta um usuário pelo id
+      security:
+        - auth: []
       responses:
         '204':
           description: Deleted
         '404':
           description: id not found
         '401':
-          description: Unauthorized 
+          description: Unauthorized
     put:
       tags:
-      - "Usuário"
+        - "Usuário"
       summary: Altera um usuário buscando pelo id
+      security:
+        - auth: []
       requestBody:
         content:
           apllication/json:
             schema:
               type: object
               properties:
-                  nome:
-                    type: string
-                  email:
-                    type: string
-                  senha:
-                    type: string
-                  cpf:
-                    type: string
-                  telefone:
-                    type: string
-                  nascimento:
-                    type: string
-                    format: date  # or date-time
+                nome:
+                  type: string
+                email:
+                  type: string
+                senha:
+                  type: string
+                cpf:
+                  type: string
+                telefone:
+                  type: string
+                nascimento:
+                  type: string
+                  format: date  # or date-time
       responses:
         201:
           description: "Sucesso"
@@ -692,3 +719,8 @@ paths:
                   nascimento:
                     type: string
                     format: date  # or date-time
+components:
+  securitySchemes:
+    auth:
+      type: http
+      scheme: bearer
