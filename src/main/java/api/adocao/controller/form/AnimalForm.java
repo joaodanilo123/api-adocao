@@ -31,7 +31,7 @@ public class AnimalForm {
     private LocalDate dataNascimento;
 
     @NotNull
-    private Genero genero;
+    private String genero;
 
     private Long instituicaoId;
 
@@ -41,7 +41,7 @@ public class AnimalForm {
         animal.setEspecie(this.especie);
         animal.setRaca(this.raca);
         animal.setDataNascimento(this.dataNascimento);
-        animal.setGenero(this.genero);
+        animal.setGenero(Genero.valueOf(getGenero()));
         return animal;
     }
 }
