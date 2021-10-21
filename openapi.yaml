@@ -719,6 +719,239 @@ paths:
                   nascimento:
                     type: string
                     format: date  # or date-time
+  /requisicao:
+    get:
+      tags:
+        - "Requisição"
+      summary: Faz a listagem das requisições
+      security:
+        - auth: []
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                    animalId:
+                      type: number
+                    usuarioId:
+                      type: number
+                    status:
+                      type: string
+                    dataDeCadastro:
+                      type: string
+                    dataDeFechamento:
+                      type: string
+    post:
+      tags:
+        - Requisição
+      summary: Faz o cadastro da requisição
+      security:
+        - auth: []
+      requestBody:
+        content:
+          apllication/json:
+            schema:
+              type: object
+              properties:
+                animalId:
+                  type: number
+                usuarioId:
+                  type: number
+      responses:
+        201:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                    animalId:
+                      type: number
+                    usuarioId:
+                      type: number
+                    status:
+                      type: string
+                    dataDeCadastro:
+                      type: string
+                    dataDeFechamento:
+                      type: string
+        400:
+          description: Usuário ou Animal não encontrados
+  /requisicao/status:
+    put:
+      tags:
+        - "Requisição"
+      summary: Faz a listagem das requisições
+      security:
+        - auth: []
+      requestBody:
+        content:
+          apllication/json:
+            schema:
+              type: object
+              properties:
+                requisicaoId:
+                  type: number
+                status:
+                  type: string
+      responses:
+        200:
+          description: Sucesso
+        400:
+          description: Dados enviados de forma incorreta
+        404:
+          description: Requisição não encontrada
+  /inventario:
+    get:
+
+      tags:
+        - Inventário
+      summary: Faz a listagem dos inventário
+      security:
+        - auth: []
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    data_doacao:
+                      type: string
+                    instituicaoId:
+                      type: number
+                    item:
+                      type: string
+    post:
+      tags:
+        - Inventário
+      summary: Faz o cadastro do inventário
+      security:
+        - auth: []
+      requestBody:
+        content:
+          apllication/json:
+            schema:
+              type: object
+              properties:
+                data_doacao:
+                  type: string
+                instituicaoId:
+                  type: number
+                item:
+                  type: string
+      responses:
+        201:
+          description: "Sucesso"
+          content:
+            apllication/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  data_doacao:
+                    type: string
+                  instituicaoId:
+                    type: number
+                  item:
+                    type: string
+  /inventario/{id}:
+    parameters:
+      - name: id
+        in: path
+        schema:
+          type: number
+        required: true
+    get:
+      security:
+        - auth: []
+      tags:
+        - "Inventário"
+      summary: Recupera um inventário pelo id.
+
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  data_doacao:
+                    type: string
+                  instituicaoId:
+                    type: number
+                  item:
+                    type: string
+        404:
+          description: Inventário não encontrado
+          content:
+            application/json:
+              example: "Not Found"
+    delete:
+      security:
+        - auth: []
+      tags:
+        - "Inventário"
+      summary: Deleta um inventário pelo id.
+      responses:
+        '204':
+          description: Deleted
+        '404':
+          description: id not found
+        '401':
+          description: Unauthorized
+    put:
+      tags:
+        - "Inventário"
+      summary: Altera um inventário baseado no id
+      security:
+        - auth: []
+      requestBody:
+        content:
+          apllication/json:
+            schema:
+              type: object
+              properties:
+                data_doacao:
+                  type: string
+                instituicaoId:
+                  type: number
+                item:
+                  type: string
+      responses:
+        201:
+          description: "Sucesso"
+          content:
+            apllication/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  data_doacao:
+                    type: string
+                  instituicaoId:
+                    type: number
+                  item:
+                    type: string
 components:
   securitySchemes:
     auth:
